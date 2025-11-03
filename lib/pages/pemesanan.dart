@@ -4,6 +4,7 @@ import '../model/layanan.dart';
 import '../model/pemesanan_model.dart'; 
 import '../services/pemesanan_service.dart'; 
 import '../services/service_api.dart'; 
+import '../services/notification_service.dart';
 import 'package:uuid/uuid.dart';
 
 class PemesananPage extends StatefulWidget {
@@ -25,6 +26,7 @@ class _PemesananPageState extends State<PemesananPage> {
   final _formKey = GlobalKey<FormState>();
   final PemesananService _pemesananService = PemesananService();
   final CurrencyService _apiService = CurrencyService(); 
+  final NotificationService _notificationService = NotificationService();
 
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _namaHewanController = TextEditingController();
@@ -159,13 +161,19 @@ class _PemesananPageState extends State<PemesananPage> {
       distanceInKm: widget.distanceInKm ?? 0.0,
     );
 
-    // 1. Simpan pesanan ke database/service (sesuai implementasi Anda)
+  
     await _pemesananService.simpanPemesanan(pesanan);
 
-    // 2. Navigasi dan KIRIM DATA
+    
+    await _notificationService.showNotification(
+      'Pemesanan Berhasil!',
+      'Pesanan Anda untuk ${widget.layanan.nama} telah dikonfirmasi.',
+    );
+
+   
     Navigator.of(context).pushReplacementNamed(
         '/ringkasan',
-        arguments: pesanan, // ⬅ INI PERBAIKANNYA
+        arguments: pesanan, 
     );
   }
 

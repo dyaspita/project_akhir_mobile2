@@ -6,7 +6,7 @@ import 'model/user.dart';
 import 'model/pemesanan_model.dart';
 import 'model/layanan.dart';
 import 'utils/time_adapter.dart';
-
+import 'services/notification_service.dart';
 
 import 'pages/login.dart';
 import 'pages/register.dart';
@@ -18,6 +18,11 @@ import 'pages/ringkasan_pemesanan.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize Notification Service
+  final notificationService = NotificationService();
+  await notificationService.init();
+  await notificationService.requestPermissions();
 
   // Hive
   await Hive.initFlutter();
@@ -50,12 +55,16 @@ class MyApp extends StatelessWidget {
         '/ringkasan': (context) => const RingkasanPemesananPage(),
         '/detail_penitipan': (context) {
           final args = ModalRoute.of(context)?.settings.arguments;
-          final layananData = (args is Map) ? Map<String, dynamic>.from(args) : <String, dynamic>{};
+          final layananData = (args is Map)
+              ? Map<String, dynamic>.from(args)
+              : <String, dynamic>{};
           return DetailPenitipanPage(layananData: layananData);
         },
         '/pemesanan': (context) {
           final args = ModalRoute.of(context)?.settings.arguments;
-          final layananMap = (args is Map) ? Map<String, dynamic>.from(args) : <String, dynamic>{};
+          final layananMap = (args is Map)
+              ? Map<String, dynamic>.from(args)
+              : <String, dynamic>{};
           return PemesananPage(layanan: Layanan.fromMap(layananMap));
         },
       },
