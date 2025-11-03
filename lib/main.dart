@@ -15,16 +15,16 @@ import 'pages/profile.dart';
 import 'pages/detail_penitipan.dart';
 import 'pages/pemesanan.dart';
 import 'pages/ringkasan_pemesanan.dart';
+import 'pages/riwayat.dart';
+import 'pages/splash_screen.dart'; 
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Initialize Notification Service
   final notificationService = NotificationService();
   await notificationService.init();
   await notificationService.requestPermissions();
 
-  // Hive
   await Hive.initFlutter();
   await SharedPreferences.getInstance();
 
@@ -46,13 +46,15 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Pet Hotel',
       debugShowCheckedModeBanner: false,
-      initialRoute: '/login',
+      initialRoute: '/splash',
       routes: {
+        '/splash': (context) => const SplashScreen(), 
         '/login': (context) => const Login(title: 'Login'),
         '/register': (context) => const Register(title: 'Register'),
         '/home': (context) => const HomePage(),
         '/profile': (context) => const ProfilePage(),
         '/ringkasan': (context) => const RingkasanPemesananPage(),
+        '/riwayat': (context) => const RiwayatPage(),
         '/detail_penitipan': (context) {
           final args = ModalRoute.of(context)?.settings.arguments;
           final layananData = (args is Map)

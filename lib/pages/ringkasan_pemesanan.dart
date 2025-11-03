@@ -3,9 +3,7 @@ import '../model/pemesanan_model.dart';
 
 class RingkasanPemesananPage extends StatelessWidget {
   const RingkasanPemesananPage({super.key});
-
-  // Warna primer yang lebih netral untuk latar belakang
-  final Color _cardColor = const Color(0xFFF0F4F8); // Light Blue-Grey background
+  final Color _cardColor = const Color.fromARGB(255, 255, 255, 255); 
 
   String _formatDate(DateTime dateTime) {
     return "${dateTime.day.toString().padLeft(2, '0')}-${dateTime.month.toString().padLeft(2, '0')}-${dateTime.year}";
@@ -21,7 +19,6 @@ class RingkasanPemesananPage extends StatelessWidget {
     }
   }
 
-  // Widget baris detail
   Widget _buildDetailRow(String label, String value, {bool isTotal = false}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 0),
@@ -34,7 +31,7 @@ class RingkasanPemesananPage extends StatelessWidget {
                 style: TextStyle(
                     fontWeight: isTotal ? FontWeight.bold : FontWeight.w500,
                     fontSize: isTotal ? 16 : 14,
-                    color: isTotal ? Colors.indigo.shade800 : Colors.black54)),
+                    color: isTotal ? Color.fromARGB(255, 68, 119, 248) : const Color.fromARGB(255, 8, 0, 0))),
           ),
           const SizedBox(width: 10),
           Text(value,
@@ -42,7 +39,7 @@ class RingkasanPemesananPage extends StatelessWidget {
               style: TextStyle(
                   fontWeight: isTotal ? FontWeight.w900 : FontWeight.w600,
                   fontSize: isTotal ? 18 : 14,
-                  color: isTotal ? Colors.indigo.shade800 : Colors.black)),
+                  color: isTotal ? Colors.indigo.shade800 : const Color.fromARGB(255, 2, 0, 0))),
         ],
       ),
     );
@@ -63,24 +60,16 @@ class RingkasanPemesananPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Pesanan Berhasil!'),
+        title: const Text('Detail Pesanan'),
         backgroundColor: Colors.blueAccent,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            // Header Sukses
-            const Text(
-              'Terima kasih! Pesanan Anda telah dikonfirmasi. 🎉', // Teks diperbaiki
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.green),
-            ),
-            const SizedBox(height: 25),
-            
-            // Kartu Ringkasan (Tiket)
+           
             Card(
-              color: _cardColor, // Warna latar belakang kartu baru
+              color: _cardColor, 
               elevation: 8,
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
               child: Padding(
@@ -88,7 +77,6 @@ class RingkasanPemesananPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // JUDUL DAN ID BOOKING (Baris 1)
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -97,7 +85,6 @@ class RingkasanPemesananPage extends StatelessWidget {
                                 fontSize: 22, 
                                 fontWeight: FontWeight.w900, 
                                 color: Colors.blue)),
-                        // ID Booking di atas detail Pemesan
                         Text('ID: ${pesanan.idPemesanan.substring(0, 8)}', 
                             style: const TextStyle(
                                 fontSize: 14, 
@@ -108,19 +95,16 @@ class RingkasanPemesananPage extends StatelessWidget {
                     
                     const Divider(height: 25, thickness: 1.5, color: Colors.blueGrey),
 
-                    // DETAIL PEMESANAN
                     _buildDetailRow('Pemesan', pesanan.username),
                     _buildDetailRow('Nama Hewan', pesanan.namaHewan),
                     
                     const Divider(height: 10, thickness: 0.5, color: Colors.black12),
 
-                    // DETAIL LAYANAN & JANGKA WAKTU
                     _buildDetailRow('Layanan', pesanan.namaLayanan),
                     _buildDetailRow('Jangka Waktu', '${pesanan.jumlahHari} hari'),
                     
                     const Divider(height: 20, thickness: 1.0, color: Colors.blueGrey),
 
-                    // DETAIL WAKTU
                     _buildDetailRow('Pengantaran', 
                                     '${_formatDate(pesanan.hariPengantaran)} | ${pesanan.jamPengantaran.format(context)}'),
                     _buildDetailRow('Penjemputan', 
@@ -128,7 +112,6 @@ class RingkasanPemesananPage extends StatelessWidget {
                     
                     const Divider(height: 25, thickness: 2, color: Colors.blueGrey),
 
-                    // TOTAL HARGA
                     _buildDetailRow('TOTAL HARGA', hargaTerformat, isTotal: true),
                   ],
                 ),
@@ -137,7 +120,6 @@ class RingkasanPemesananPage extends StatelessWidget {
             
             const SizedBox(height: 20),
 
-            // Peringatan Check-in (Perbaikan tampilan)
             Container(
               padding: const EdgeInsets.all(15),
               decoration: BoxDecoration(
@@ -166,14 +148,13 @@ class RingkasanPemesananPage extends StatelessWidget {
 
             const SizedBox(height: 30),
 
-            // Tombol Kembali
             ElevatedButton.icon(
               onPressed: () => Navigator.popUntil(context, ModalRoute.withName('/home')),
               icon: const Icon(Icons.home, color: Colors.white),
               label: const Text('Kembali ke Beranda', style: TextStyle(fontSize: 16, color: Colors.white)),
               style: ElevatedButton.styleFrom(
                   minimumSize: const Size(double.infinity, 50),
-                  backgroundColor: Colors.blueAccent.shade700,
+                  backgroundColor: Color.fromARGB(255, 68, 119, 248),
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
             )

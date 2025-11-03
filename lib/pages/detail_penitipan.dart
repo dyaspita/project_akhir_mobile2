@@ -43,7 +43,6 @@ class _DetailPenitipanPageState extends State<DetailPenitipanPage> {
   }
 
   Future<void> _goToPemesanan() async {
-    // 1️⃣ Cek GPS aktif
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -101,6 +100,7 @@ class _DetailPenitipanPageState extends State<DetailPenitipanPage> {
     final bool isCat = _layanan.hewan.toLowerCase() == 'kucing';
 
     return Scaffold(
+      backgroundColor: Colors.white,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -110,7 +110,6 @@ class _DetailPenitipanPageState extends State<DetailPenitipanPage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Galeri Gambar
           Stack(
             children: [
               SizedBox(
@@ -197,9 +196,9 @@ class _DetailPenitipanPageState extends State<DetailPenitipanPage> {
                   Row(
                     children: [
                       Icon(
-                        isCat ? Icons.catching_pokemon : Icons.pets,
+                        isCat ? Icons.pets : Icons.pets,
                         size: 18,
-                        color: isCat ? Colors.orange : Colors.blueGrey,
+                        color: isCat ? const Color.fromARGB(255, 68, 0, 255) : Colors.blueGrey,
                       ),
                       const SizedBox(width: 4),
                       Text(
@@ -207,7 +206,7 @@ class _DetailPenitipanPageState extends State<DetailPenitipanPage> {
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
-                          color: isCat ? Colors.orange : Colors.blueGrey,
+                          color: isCat ? const Color.fromARGB(255, 68, 0, 255) : Colors.blueGrey,
                         ),
                       ),
                     ],
@@ -234,7 +233,7 @@ class _DetailPenitipanPageState extends State<DetailPenitipanPage> {
         ],
       ),
       bottomSheet: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
         decoration: BoxDecoration(
           color: Colors.white,
           boxShadow: [
@@ -266,9 +265,9 @@ class _DetailPenitipanPageState extends State<DetailPenitipanPage> {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: _primaryColor,
-                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  padding: const EdgeInsets.symmetric(vertical: 8),
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12)),
+                      borderRadius: BorderRadius.circular(10)),
                 ),
                 onPressed: _goToPemesanan,
                 child: const Text(

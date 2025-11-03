@@ -119,7 +119,7 @@ class _HomePageState extends State<HomePage> {
       setState(() => _selectedIndex = 0);
     } else if (index == 1) {
       setState(() => _selectedIndex = 1);
-      Navigator.of(context).pushReplacementNamed('/ringkasan');
+      Navigator.of(context).pushReplacementNamed('/riwayat');
     } else if (index == 2) {
       setState(() => _selectedIndex = 2);
       Navigator.of(context).pushReplacementNamed('/profile');
@@ -161,14 +161,12 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.white,
       body: CustomScrollView(
         slivers: [
-          // HEADER
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.only(top: 30.0, left: 20.0, right: 20.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Notifikasi + Avatar
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -217,7 +215,6 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
 
-          // SEARCH BAR
           SliverToBoxAdapter(
             child: Padding(
               padding:
@@ -225,7 +222,7 @@ class _HomePageState extends State<HomePage> {
               child: TextField(
                 controller: _searchController,
                 decoration: InputDecoration(
-                  hintText: 'Cari layanan (VIP Suite, Standard Room, dll.)',
+                  hintText: 'Cari layanan',
                   prefixIcon: const Icon(Icons.search),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
@@ -237,7 +234,6 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
 
-          // FILTER CHIP
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.only(left: 20.0, bottom: 10),
@@ -254,7 +250,6 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
 
-          // GRID VIEW DATA
           SliverPadding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             sliver: FutureBuilder<void>(
@@ -330,7 +325,7 @@ class _HomePageState extends State<HomePage> {
                                 child: Image.network(
                                   imageUrl,
                                   fit: BoxFit.cover,
-                                  height: 110,
+                                  height: 100,
                                   errorBuilder:
                                       (context, error, stackTrace) =>
                                           const Center(
@@ -388,11 +383,11 @@ class _HomePageState extends State<HomePage> {
                     childCount: _filteredLayananList.length,
                   ),
                   gridDelegate:
-                      const SliverGridDelegateWithFixedCrossAxisCount(
+                  const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     crossAxisSpacing: 12,
                     mainAxisSpacing: 12,
-                    childAspectRatio: 0.72,
+                    childAspectRatio: 0.65,
                   ),
                 );
               },
@@ -402,8 +397,6 @@ class _HomePageState extends State<HomePage> {
           const SliverToBoxAdapter(child: SizedBox(height: 80)),
         ],
       ),
-
-      // Bottom Navigation
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         selectedItemColor: _primaryColor,
@@ -413,7 +406,7 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
               icon: Icon(Icons.home_outlined), label: 'Home'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.book_outlined), label: 'Pemesanan'),
+              icon: Icon(Icons.book_outlined), label: 'Riwayat'),
           BottomNavigationBarItem(
               icon: Icon(Icons.person_outline), label: 'Profile'),
         ],

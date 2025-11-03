@@ -44,7 +44,7 @@ class _RegisterPageState extends State<Register> {
       if (mounted) {
         ScaffoldMessenger.of(context)
             .showSnackBar(const SnackBar(content: Text('Pendaftaran berhasil!')));
-        Navigator.of(context).pushReplacementNamed('/home');
+        Navigator.of(context).pushReplacementNamed('/login');
       }
     }
   }

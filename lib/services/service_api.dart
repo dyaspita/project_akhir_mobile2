@@ -12,7 +12,7 @@ class CurrencyService {
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        final rate = data['conversion_rates'][targetCurrency]; // ⚠️ perhatikan key-nya
+        final rate = data['conversion_rates'][targetCurrency]; 
         if (rate == null) {
           throw Exception('Mata uang $targetCurrency tidak ditemukan');
         }

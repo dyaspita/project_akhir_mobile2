@@ -64,7 +64,6 @@ class _PemesananPageState extends State<PemesananPage> {
     super.dispose();
   }
 
-  /// 🔁 Konversi waktu antar zona
   TimeOfDay _convertTimeByZone(TimeOfDay originalTime, String fromZone, String toZone) {
     final offsets = {'WIB': 0, 'WITA': 1, 'WIT': 2, 'London': -7};
     final diff = (offsets[toZone] ?? 0) - (offsets[fromZone] ?? 0);
@@ -75,17 +74,14 @@ class _PemesananPageState extends State<PemesananPage> {
     return TimeOfDay(hour: newHour, minute: originalTime.minute);
   }
 
-  /// 🔄 Update total harga
   void _updateTotal() {
     final int hari = int.tryParse(_jumlahHariController.text) ?? 1;
     setState(() {
-      // Perhitungan menggunakan harga dan kurs yang sudah dikalikan dengan hari
       _totalHarga = (widget.layanan.harga * hari * _kurs).round(); 
       _updateHariPenjemputan();
     });
   }
 
-  /// 📅 Update hari penjemputan otomatis
   void _updateHariPenjemputan() {
     if (_tanggalPengantaranController.text.isEmpty) {
       setState(() => _hariPenjemputan = null);
@@ -100,7 +96,6 @@ class _PemesananPageState extends State<PemesananPage> {
     }
   }
 
-  /// 📆 Pilih tanggal
   Future<void> _selectDate(BuildContext context) async {
     final picked = await showDatePicker(
       context: context,
@@ -130,7 +125,6 @@ class _PemesananPageState extends State<PemesananPage> {
     }
   }
 
-  /// 💾 Simpan pesanan
   void _simpanPesanan() async {
     if (!_formKey.currentState!.validate() || _hariPenjemputan == null) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -177,7 +171,6 @@ class _PemesananPageState extends State<PemesananPage> {
     );
   }
 
-  /// 💰 Format harga
   String _formatHarga(int harga) {
     if (_currency == 'IDR') {
       final formatted = harga.toString().replaceAllMapped(
@@ -188,12 +181,9 @@ class _PemesananPageState extends State<PemesananPage> {
     }
   }
 
-  /// 📅 Format tanggal tampilan
   String _formatDateOnly(DateTime dateTime) {
     return "${dateTime.day.toString().padLeft(2, '0')}-${dateTime.month.toString().padLeft(2, '0')}-${dateTime.year}";
   }
-
-  /// 🧱 TextField builder
   Widget _buildTextField(
     TextEditingController controller,
     String label, {
@@ -273,7 +263,6 @@ class _PemesananPageState extends State<PemesananPage> {
 
               const SizedBox(height: 10),
 
-              /// 🌍 Zona waktu
               DropdownButtonFormField<String>(
                 value: _zonaWaktu,
                 decoration: const InputDecoration(
@@ -286,7 +275,6 @@ class _PemesananPageState extends State<PemesananPage> {
                   setState(() {
                     final oldZone = _zonaWaktu;
                     _zonaWaktu = val;
-                    // Konversi waktu yang telah dipilih ke zona waktu baru
                     _jamPengantaran =
                         _convertTimeByZone(_jamPengantaran, oldZone, _zonaWaktu); 
                     _waktuPengantaranDisplayController.text =
@@ -297,7 +285,6 @@ class _PemesananPageState extends State<PemesananPage> {
 
               const SizedBox(height: 10),
 
-              /// 💱 Currency
               DropdownButtonFormField<String>(
                 value: _currency,
                 decoration: const InputDecoration(
@@ -316,7 +303,6 @@ class _PemesananPageState extends State<PemesananPage> {
                     });
                   } else {
                     try {
-                      // Asumsi: _apiService.getKurs mengembalikan kurs konversi IDR ke mata uang target
                       double kurs = await _apiService.getKurs(_currency);
                       setState(() {
                         _kurs = kurs;
@@ -335,16 +321,16 @@ class _PemesananPageState extends State<PemesananPage> {
 
               if (_hariPenjemputan != null)
                 Card(
-                  color: Colors.lightGreen.shade50,
+                  color: const Color.fromARGB(255, 255, 255, 255),
                   child: Padding(
                     padding: const EdgeInsets.all(12.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('✅ Penjemputan Otomatis',
+                        Text('Penjemputan Otomatis',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: Colors.green.shade700)),
+                                color: const Color.fromARGB(255, 7, 0, 0))),
                         const Divider(height: 10, color: Colors.transparent),
                         Text('Tanggal Penjemputan: ${_formatDateOnly(_hariPenjemputan!)}'),
                         Text('Waktu Penjemputan: ${_jamPenjemputan.hour.toString().padLeft(2, '0')}:${_jamPenjemputan.minute.toString().padLeft(2, '0')}'),
@@ -364,7 +350,7 @@ class _PemesananPageState extends State<PemesananPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('📝 Ringkasan Pemesanan',
+                      Text('Ringkasan Pemesanan',
                           style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,

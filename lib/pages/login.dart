@@ -85,11 +85,11 @@ class _LoginPageState extends State<Login> {
       backgroundColor: primaryColor,
       body: Center(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(30),
+          padding: const EdgeInsets.all(25),
           child: Container(
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(25),
+              borderRadius: BorderRadius.circular(20),
               boxShadow: const [BoxShadow(color: primaryColor, blurRadius: 10)],
             ),
             child: Padding(

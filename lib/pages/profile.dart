@@ -1,50 +1,44 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart'; // Tambahkan import ini!
+import 'package:shared_preferences/shared_preferences.dart'; 
 
-class ProfilePage extends StatefulWidget { // UBAH MENJADI STATEFULWIDGET
+class ProfilePage extends StatefulWidget { 
   const ProfilePage({super.key});
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> { // Tambahkan State Class
+class _ProfilePageState extends State<ProfilePage> { 
   final Color primaryBlue = const Color.fromARGB(255, 68, 119, 248);
-  String _currentUsername = 'Memuat...'; // State untuk menyimpan username
+  String _currentUsername = 'Memuat...'; 
 
   @override
   void initState() {
     super.initState();
-    _loadUserData(); // Panggil fungsi untuk memuat data saat widget dibuat
+    _loadUserData(); 
   }
 
-  // Fungsi untuk memuat username dari SharedPreferences
   void _loadUserData() async {
     final prefs = await SharedPreferences.getInstance();
     if (mounted) {
       setState(() {
-        // Ambil username yang tersimpan saat login, atau default 'Pengguna'
         _currentUsername = prefs.getString('currentUsername') ?? 'Pengguna';
       });
     }
   }
   
-  // Fungsilogout (Bisa diambil dari HomePage)
   void _logout() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('isLoggedIn');
     await prefs.remove('currentUsername');
     await prefs.remove('role');
     if (mounted) {
-      // Ganti '/login' dengan nama rute login yang sesuai di aplikasi kamu
       Navigator.of(context).pushReplacementNamed('/login'); 
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
-    // ... (Sisa kode build)
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -52,33 +46,29 @@ class _ProfilePageState extends State<ProfilePage> { // Tambahkan State Class
         backgroundColor: Colors.white,
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.black),
-      ), // Tambah AppBar agar ada tombol kembali (jika tidak menggunakan BottomNav)
+      ), 
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            // Bagian Profil Dinamis
             CircleAvatar(
               radius: 60,
               backgroundColor: primaryBlue.withOpacity(0.1),
-              child: Icon(Icons.person, size: 60, color: primaryBlue),
+               backgroundImage: const AssetImage('assets/fotoku.jpg'),
             ),
             const SizedBox(height: 15),
 
-            // Tampilkan Username yang dimuat
             Text(
-              _currentUsername, // GANTI DENGAN STATE
+              _currentUsername, 
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
                 color: primaryBlue,
               ),
             ),
-            // HILANGKAN WIDGET NIM STATIC DI SINI JIKA TIDAK DIPERLUKAN
             const SizedBox(height: 30),
 
-            // Tambahkan Tombol Logout
             ListTile(
               leading: const Icon(Icons.logout, color: Colors.red),
               title: const Text('Keluar', style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
@@ -89,7 +79,6 @@ class _ProfilePageState extends State<ProfilePage> { // Tambahkan State Class
             
             const SizedBox(height: 20),
 
-            // Bagian Informasi Statis (Dosen, Kesan, Saran)
             _buildInfoCard(
               title: "Nama : Wahyu Dyas Puspitasari",
               subtitle: "NIM : 124230051",
@@ -111,7 +100,6 @@ class _ProfilePageState extends State<ProfilePage> { // Tambahkan State Class
           ],
         ),
       ),
-      // ... (BottomNavigationBar tetap sama)
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: 2,
         selectedItemColor: primaryBlue,
@@ -119,15 +107,12 @@ class _ProfilePageState extends State<ProfilePage> { // Tambahkan State Class
         onTap: (index) {
           switch (index) {
             case 0:
-              // Pastikan menggunakan pushReplacementNamed agar BottomNav di home berfungsi normal
               Navigator.of(context).pushReplacementNamed('/home'); 
               break;
             case 1:
               Navigator.of(context).pushReplacementNamed('/ringkasan'); 
-
               break;
             case 2:
-              // sudah di halaman profil
               break;
           }
         },
@@ -138,7 +123,7 @@ class _ProfilePageState extends State<ProfilePage> { // Tambahkan State Class
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.book_outlined),
-            label: 'Pemesanan',
+            label: 'Riwayat',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person_outline),
@@ -149,7 +134,6 @@ class _ProfilePageState extends State<ProfilePage> { // Tambahkan State Class
     );
   }
 
-  // ... (Widget _buildInfoCard tetap sama)
   Widget _buildInfoCard({
     required String title,
     required String subtitle,
